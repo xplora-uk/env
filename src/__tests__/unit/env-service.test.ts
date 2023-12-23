@@ -5,15 +5,18 @@ import { IProcessEnv } from '../../types';
 describe('env-service', () => {
 
   interface EnvType1 extends IProcessEnv {
-    KEY_STR_1           ?: string;
-    KEY_STR_NIL_1       ?: string;
-    KEY_STR_NIL_2       ?: string;
-    KEY_INT_1           ?: string;
-    KEY_INT_NIL_1       ?: string;
-    KEY_INT_NIL_2       ?: string;
-    KEY_FLOAT_1         ?: string;
-    KEY_FLOAT_NIL_1     ?: string;
-    KEY_FLOAT_NIL_2     ?: string;
+    KEY_STR_1    ?: string;
+    KEY_STR_NIL_1?: string;
+    KEY_STR_NIL_2?: string;
+
+    KEY_INT_1    ?: string;
+    KEY_INT_NIL_1?: string;
+    KEY_INT_NIL_2?: string;
+
+    KEY_FLOAT_1    ?: string;
+    KEY_FLOAT_NIL_1?: string;
+    KEY_FLOAT_NIL_2?: string;
+
     KEY_BOOL_TRUE_1     ?: string;
     KEY_BOOL_TRUE_2     ?: string;
     KEY_BOOL_TRUE_3     ?: string;
@@ -21,9 +24,10 @@ describe('env-service', () => {
     KEY_BOOL_FALSE_1    ?: string;
     KEY_BOOL_FALSE_NIL_1?: string;
     KEY_BOOL_FALSE_NIL_2?: string;
-    KEY_URL_HTTPS       ?: string;
-    KEY_URL_NIL_1       ?: string;
-    KEY_URL_NIL_2       ?: string;
+
+    KEY_URL_HTTPS?: string;
+    KEY_URL_NIL_1?: string;
+    KEY_URL_NIL_2?: string;
   }
 
   type EnvType2 = Omit<EnvType1, 'KEY_STR_NIL_2' | 'KEY_INT_NIL_2' | 'KEY_FLOAT_NIL_2' | 'KEY_BOOL_FALSE_NIL_2' | 'KEY_URL_NIL_2'>;

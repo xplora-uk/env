@@ -19,6 +19,8 @@ interface MyEnvSettings extends IProcessEnv {
   HTTP_PORT  ?: string;
   MAIN_DB_URL?: string;
   API_KEY    ?: string;
+
+
 }
 
 const env = new EnvService<MyEnvSettings>(process.env, { ignoreEmptyStrings: true });
@@ -53,6 +55,21 @@ export interface IEnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = key
 
   newEnv(keyPrefix: string): IEnvService;
   filterEnv(penv: IProcessEnv, keyPrefix: string): IProcessEnv;
+
+  // version 1.1
+  loopForEnv<T = any>(
+    counterKey: TKey,
+    indexKeyPrefix: string,
+    envHandler: (env: IEnvService, index: number, keyPrefix: string) => T,
+    indexKeyGlue?: string, // defaults to '_'
+  ): T[];
+
+  // version 1.1
+  loopGetEnvSettings(
+    counterKey: TKey,
+    indexKeyPrefix: string,
+    indexKeyGlue?: string, // defaults to '_'
+  ): Array<IObjectWithStrings>;
 }
 
 export type IProcessEnv = typeof process.env; // Record<string, string | undefined>

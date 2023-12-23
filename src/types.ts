@@ -10,9 +10,24 @@ export interface IEnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = key
 
   newEnv(keyPrefix: string): IEnvService;
   filterEnv(penv: IProcessEnv, keyPrefix: string): IProcessEnv;
+
+  loopForEnv<T = any>(
+    counterKey: TKey,
+    indexKeyPrefix: string,
+    envHandler: (env: IEnvService, index: number, keyPrefix: string) => T,
+    indexKeyGlue?: string, // defaults to '_'
+  ): T[];
+
+  loopGetEnvSettings(
+    counterKey: TKey,
+    indexKeyPrefix: string,
+    indexKeyGlue?: string, // defaults to '_'
+  ): Array<IObjectWithStrings>;
 }
 
 export type IProcessEnv = typeof process.env;
+
+export type IObjectWithStrings = Record<string, string>;
 
 export interface IEnvServiceOptions {
   /**

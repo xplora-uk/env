@@ -1,4 +1,5 @@
-import { IEnvService, IEnvServiceOptions, IProcessEnv } from './types';
+import { IEnvService, IEnvServiceOptions, IObjectWithStrings, IProcessEnv } from './types';
+import { filterEnv, filterEnvAndRemoveKeyPrefix } from './utils';
 
 const TRUTHY = ['true', '1', 'yes', 'on'];
 
@@ -17,12 +18,7 @@ export class EnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = keyof TP
   }
 
   filterEnv(penv: IProcessEnv, keyPrefix = ''): IProcessEnv {
-    if (keyPrefix === '') return penv;
-    const env: IProcessEnv = {};
-    Object.entries(penv).forEach(([key, val]) => {
-      if (key.startsWith(keyPrefix)) env[key] = val;
-    });
-    return env;
+    return filterEnv(penv, keyPrefix, false);
   }
 
   /**
@@ -77,10 +73,38 @@ export class EnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = keyof TP
     return val ? new URL(val) : null;
   }
 
-  newEnv(keyPrefix: string): IEnvService {
-    return new EnvService(this.penv, {
+  newEnv(keyPrefix: string): IEnvService<TPenv> {
+    return new EnvService<TPenv>(this.penv, {
       keyPrefix: `${this.options.keyPrefix}${keyPrefix}`,
       ignoreEmptyStrings: this.options.ignoreEmptyStrings,
     });
+  }
+
+  loopForEnv<T = any>(
+    counterKey: TKey,
+    indexKeyPrefix: string,
+    envHandler: (env: IEnvService, index: number, keyPrefix: string) => T,
+    indexKeyGlue = '_',
+  ): Array<T> {
+    const list: Array<T> = [];
+
+    const count = this.int(counterKey, 0);
+    for (let i = 1; i <= count; i++) {
+      const keyPrefix = `${indexKeyPrefix}${i}${indexKeyGlue}`;
+      const env = this.newEnv(keyPrefix);
+      const settings = envHandler(env, i, keyPrefix) as T;
+      list.push(settings); // pretending but it's ok
+    }
+
+    return list;
+  }
+
+  loopGetEnvSettings(counterKey: TKey, indexKeyPrefix: string, indexKeyGlue = '_'): Array<IObjectWithStrings> {
+    return this.loopForEnv<IObjectWithStrings>(
+      counterKey,
+      indexKeyPrefix,
+      (env, _idx, keyPrefix) => filterEnvAndRemoveKeyPrefix(env.penv, keyPrefix) as IObjectWithStrings,
+      indexKeyGlue,
+    );
   }
 }
