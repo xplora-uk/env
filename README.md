@@ -85,10 +85,10 @@ npm i
 src/
   __tests__/
     unit/
-      TODO
-  env-service.ts  implementation
-  index.ts        main file that exports features of this library
-  types.ts        TypeScript types
+      env.test.ts  unit tests for EnvService
+  env-service.ts   implementation
+  index.ts         main file that exports features of this library
+  types.ts         TypeScript types
 ```
 
 ### build
