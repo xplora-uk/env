@@ -7,6 +7,9 @@ export interface IEnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = key
   float(key: TKey, defaultValue: number): number;
   bool (key: TKey, defaultValue: boolean): boolean;
   url  (key: TKey, defaultValue: string): URL | null;
+  json (key: TKey, defaultValue: JsonType): JsonType | null;
+  json5(key: TKey, defaultValue: JsonType): JsonType | null;
+  csv  (key: TKey, defaultValue: string): string[];
 
   newEnv(keyPrefix: string): IEnvService;
   filterEnv(penv: IProcessEnv, keyPrefix: string): IProcessEnv;
@@ -41,3 +44,11 @@ export interface IEnvServiceOptions {
    */
   ignoreEmptyStrings?: boolean;
 }
+
+// JSON definition - START
+export type JsonType = string | number | boolean | JsonObject | JsonArray | null;
+export interface JsonObject {
+  [prop: string]: JsonType;
+}
+export interface JsonArray extends Array<JsonType> {}
+// JSON definition - END

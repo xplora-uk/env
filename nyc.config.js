@@ -8,7 +8,7 @@ module.exports = {
     'src/**',
   ],
   exclude: [
-    'src/**/*.test.ts',
+    'src/__tests__',
     'src/index.ts',
     'src/types.ts',
   ],

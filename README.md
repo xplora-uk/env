@@ -52,6 +52,9 @@ export interface IEnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = key
   float(key: TKey, defaultValue: number): number;
   bool (key: TKey, defaultValue: boolean): boolean;
   url  (key: TKey, defaultValue: string): URL | null;
+  json (key: TKey, defaultValue: JsonType): JsonType | null;
+  json5(key: TKey, defaultValue: JsonType): JsonType | null;
+  csv  (key: TKey, defaultValue: string): string[];
 
   newEnv(keyPrefix: string): IEnvService;
   filterEnv(penv: IProcessEnv, keyPrefix: string): IProcessEnv;
@@ -131,6 +134,7 @@ File            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------------|---------|----------|---------|---------|-------------------
 All files       |     100 |      100 |     100 |     100 |                   
  env-service.ts |     100 |      100 |     100 |     100 |                   
+ utils.ts       |     100 |      100 |     100 |     100 |                   
 ----------------|---------|----------|---------|---------|-------------------
 ```
 

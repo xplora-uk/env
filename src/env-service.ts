@@ -1,5 +1,5 @@
-import { IEnvService, IEnvServiceOptions, IObjectWithStrings, IProcessEnv } from './types';
-import { filterEnv, filterEnvAndRemoveKeyPrefix } from './utils';
+import { IEnvService, IEnvServiceOptions, IObjectWithStrings, IProcessEnv, JsonType } from './types';
+import { csvParseRow, filterEnv, filterEnvAndRemoveKeyPrefix, json5Parse, jsonParse } from './utils';
 
 const TRUTHY = ['true', '1', 'yes', 'on'];
 
@@ -71,6 +71,21 @@ export class EnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = keyof TP
   url(key: TKey, defaultValue: string): URL | null {
     const val = this.str(key, defaultValue);
     return val ? new URL(val) : null;
+  }
+
+  json(key: TKey, defaultValue: JsonType): JsonType {
+    const val = this.str(key, '');
+    return jsonParse(val, defaultValue);
+  }
+
+  json5(key: TKey, defaultValue: JsonType): JsonType {
+    const val = this.str(key, '');
+    return json5Parse(val, defaultValue);
+  }
+
+  csv(key: TKey, defaultValue: string): string[] {
+    const val = this.str(key, defaultValue);
+    return csvParseRow(val, []);
   }
 
   newEnv(keyPrefix: string): IEnvService<TPenv> {
