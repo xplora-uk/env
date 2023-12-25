@@ -70,7 +70,11 @@ export class EnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = keyof TP
 
   url(key: TKey, defaultValue: string): URL | null {
     const val = this.str(key, defaultValue);
-    return val ? new URL(val) : null;
+    try {
+      return val ? new URL(val) : null;
+    } catch (err) {
+      return null;
+    }
   }
 
   json(key: TKey, defaultValue: JsonType): JsonType {

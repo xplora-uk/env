@@ -51,10 +51,10 @@ export interface IEnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = key
   int  (key: TKey, defaultValue: number): number;
   float(key: TKey, defaultValue: number): number;
   bool (key: TKey, defaultValue: boolean): boolean;
-  url  (key: TKey, defaultValue: string): URL | null;
-  json (key: TKey, defaultValue: JsonType): JsonType | null;
-  json5(key: TKey, defaultValue: JsonType): JsonType | null;
-  csv  (key: TKey, defaultValue: string): string[];
+  url  (key: TKey, defaultValue: string): URL | null; // after v1.3 does not throw error
+  json (key: TKey, defaultValue: JsonType): JsonType | null; // version 1.2
+  json5(key: TKey, defaultValue: JsonType): JsonType | null; // version 1.2
+  csv  (key: TKey, defaultValue: string): string[]; // version 1.2
 
   newEnv(keyPrefix: string): IEnvService;
   filterEnv(penv: IProcessEnv, keyPrefix: string): IProcessEnv;
@@ -109,6 +109,7 @@ src/
   env-service.ts   implementation
   index.ts         main file that exports features of this library
   types.ts         TypeScript types
+  utils.ts         Utility functions
 ```
 
 ### build

@@ -25,9 +25,10 @@ describe('env-service', () => {
     KEY_BOOL_FALSE_NIL_1?: string;
     KEY_BOOL_FALSE_NIL_2?: string;
 
-    KEY_URL_HTTPS?: string;
-    KEY_URL_NIL_1?: string;
-    KEY_URL_NIL_2?: string;
+    KEY_URL_HTTPS  ?: string;
+    KEY_URL_INVALID?: string;
+    KEY_URL_NIL_1  ?: string;
+    KEY_URL_NIL_2  ?: string;
   }
 
   type EnvType2 = Omit<EnvType1, 'KEY_STR_NIL_2' | 'KEY_INT_NIL_2' | 'KEY_FLOAT_NIL_2' | 'KEY_BOOL_FALSE_NIL_2' | 'KEY_URL_NIL_2'>;
@@ -50,6 +51,7 @@ describe('env-service', () => {
     KEY_BOOL_FALSE_NIL_1: '',
     KEY_BOOL_FALSE_NIL_2: undefined,
     KEY_URL_HTTPS       : 'https://example.com:8080/path1',
+    KEY_URL_INVALID     : 'http',
     KEY_URL_NIL_1       : '',
     KEY_URL_NIL_2       : undefined,
   };
@@ -131,6 +133,11 @@ describe('env-service', () => {
         expect(url.port).equal('8080');
         expect(url.pathname).equal('/path1');
       }
+    });
+
+    it('should return null for invalid URL key', () => {
+      const url = env.url('KEY_URL_INVALID', '');
+      expect(url).equal(null);
     });
 
     it('should return URL of empty key using default', () => {
