@@ -4,7 +4,7 @@ Library to make it easier to work with process.env
 
 ## requirements
 
-* Node v18.19.0+
+* Node v18.16.0+
 
 ## usage
 

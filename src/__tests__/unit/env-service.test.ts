@@ -226,7 +226,7 @@ describe('env-service', () => {
     const env = new EnvService<EnvType1>(penv, { ignoreEmptyStrings: true, keyPrefix: 'KEY_' });
     
     it('should use a smaller env settings object', () => {
-      expect(Object.keys(env.penv).length).equal(19);
+      expect(Object.keys(env.penv).length).equal(20);
     });
 
     it('should return string of existing key correctly', () => {
