@@ -9,12 +9,12 @@ export class EnvService<TPenv extends IProcessEnv = IProcessEnv, TKey = keyof TP
     public penv: TPenv,
     public options: IEnvServiceOptions,
   ) {
-    this.penv = this.filterEnv(penv, options.keyPrefix) as TPenv; // pretending
     this.options = {
       keyPrefix: '',
       ignoreEmptyStrings: true,
       ...options,
     };
+    this.penv = this.filterEnv(penv, this.options.keyPrefix) as TPenv; // pretending
   }
 
   filterEnv(penv: IProcessEnv, keyPrefix = ''): IProcessEnv {

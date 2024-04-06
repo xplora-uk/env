@@ -257,4 +257,12 @@ describe('env-service', () => {
 
   });
 
+  describe('filterEnv utility function', () => {
+    const env = new EnvService<EnvType1>(penv, { ignoreEmptyStrings: true });
+    it('should return a new env object with filtered keys', () => {
+      const settings = env.filterEnv(penv); // check without keyPrefix
+      expect(Object.keys(settings).length).equal(Object.keys(penv).length);
+    })
+  });
+
 });
